@@ -4,16 +4,16 @@ enum InputType { number, text }
 
 class FormModel {
   int? status;
-  List<Data>? formData;
+  List<Data>? data;
 
-  FormModel({this.status, this.formData});
+  FormModel({this.status, this.data});
 
   FormModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['form'] != null) {
-      formData = <Data>[];
+      data = <Data>[];
       json['form'].forEach((v) {
-        formData!.add(Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
@@ -21,8 +21,8 @@ class FormModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
-    if (formData != null) {
-      data['form'] = formData!.map((v) => v.toJson()).toList();
+    if (this.data != null) {
+      data['form'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -30,14 +30,14 @@ class FormModel {
 
 class Data {
   int? id;
-  MainForm? form;
+  MainForm? mainForm;
   List<SubForm>? subForm;
 
-  Data({this.id, this.form, this.subForm});
+  Data({this.id, this.mainForm, this.subForm});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    form = json['form'] != null ? MainForm.fromJson(json['form']) : null;
+    mainForm = json['form'] != null ? MainForm.fromJson(json['form']) : null;
     if (json['sub_form'] != null) {
       subForm = <SubForm>[];
       json['sub_form'].forEach((v) {
@@ -49,8 +49,8 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    if (form != null) {
-      data['form'] = form!.toJson();
+    if (mainForm != null) {
+      data['form'] = mainForm!.toJson();
     }
     if (subForm != null) {
       data['sub_form'] = subForm!.map((v) => v.toJson()).toList();

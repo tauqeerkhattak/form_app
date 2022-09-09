@@ -16,6 +16,7 @@ class InputField extends StatelessWidget {
     this.validator,
     this.inputType,
     this.label,
+    this.onChanged,
   }) : super(key: key);
 
   final String? placeHolder;
@@ -28,6 +29,7 @@ class InputField extends StatelessWidget {
   final TextInputType? inputType;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +57,7 @@ class InputField extends StatelessWidget {
             readOnly: readOnly ?? false,
             onTap: onTap,
             keyboardType: inputType,
+            onChanged: onChanged,
             maxLines: lines ?? 1,
             style: const TextStyle(
               fontSize: 16,

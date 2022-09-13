@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:form_app/domain/controllers/home_controller.dart';
 import 'package:form_app/domain/models/form_model.dart';
@@ -60,16 +62,12 @@ class Home extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     if (controller.key.currentState!.validate()) {
-                      Get.rawSnackbar(
-                        message: "Validated",
-                      );
+                      log('Validated');
                     } else {
-                      Get.rawSnackbar(
-                        message: "Validated",
-                      );
+                      log('Not validated');
                     }
                   },
-                  child: CustomText(
+                  child: const CustomText(
                     text: 'Submit',
                   ),
                 ),
@@ -100,9 +98,8 @@ class Home extends StatelessWidget {
       children: [
         InputField(
           validator: (value) {
-            final regex = getValidator('', form.validations);
-            if (RegExp(regex!).hasMatch(value!)) {
-              return 'Please enter a valid value';
+            if (form.isRequired != '0') {
+              return getValidator(value, form.validations);
             }
             return null;
           },
@@ -154,6 +151,13 @@ class Home extends StatelessWidget {
                                     text: subForm.defaultValue,
                                   );
                                   return InputField(
+                                    validator: (value) {
+                                      if (form.isRequired != '0') {
+                                        return getValidator(
+                                            value, form.validations);
+                                      }
+                                      return null;
+                                    },
                                     controller: controller,
                                     label: subForm.label,
                                     placeHolder: subForm.placeHolder,
